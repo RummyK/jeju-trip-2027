@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f4c5c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>아름Pick 제주 여행</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* layout: 폰 화면 하나짜리 앱 — 상단 헤더(D-day) + 스크롤 본문 + 하단 탭바 */
+:root{
+  --sea:#0f4c5c;        /* 제주 바다 */
+  --tangerine:#f2862b;  /* 감귤 */
+  --basalt:#2b2f33;     /* 현무암 */
+  --bg:#f3f6f6;
+  --card:#ffffff;
+  --muted:#6b7479;
+  --line:#e1e7e8;
+  --sea-soft:#e3eef0;
+  --tan-soft:#fdeedf;
+  --ok:#2e8b57;
+  --danger:#d6453d;
+  --display:"Do Hyeon", "IBM Plex Sans KR", sans-serif;
+  --body:"IBM Plex Sans KR", -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --sea:#7cc3d1; --tangerine:#ff9d4a; --basalt:#e8ecee;
+    --bg:#111719; --card:#1a2225; --muted:#94a0a5; --line:#2a3438;
+    --sea-soft:#1d3238; --tan-soft:#3a2a1c; --ok:#5cc28a; --danger:#ff7a70;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --sea:#7cc3d1; --tangerine:#ff9d4a; --basalt:#e8ecee;
+  --bg:#111719; --card:#1a2225; --muted:#94a0a5; --line:#2a3438;
+  --sea-soft:#1d3238; --tan-soft:#3a2a1c; --ok:#5cc28a; --danger:#ff7a70;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--basalt);font-family:var(--body);font-size:15px;line-height:1.5;-webkit-tap-highlight-color:transparent}
+.app{max-width:520px;margin:0 auto;height:100%;display:flex;flex-direction:column}
+header{background:var(--sea);color:#fff;padding:calc(env(safe-area-inset-top) + 18px) 20px 18px;position:relative;overflow:hidden}
+:root[data-theme="dark"] header{color:#0d1a1d}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) header{color:#0d1a1d}}
+header .brand{font-family:var(--display);font-size:28px;line-height:1.1;margin:0;text-wrap:balance}
+header .brand span{color:var(--tangerine)}
+:root[data-theme="dark"] header .brand span{color:#7a3500}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) header .brand span{color:#7a3500}}
+header .meta{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:6px;font-size:13px;opacity:.9}
+.dday{font-family:var(--display);font-size:22px;background:var(--tangerine);color:#fff;padding:4px 12px;border-radius:999px;white-space:nowrap}
+.orange{position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:var(--tangerine);opacity:.18}
+main{flex:1;overflow-y:auto;padding:16px 16px 24px}
+.view{display:none;flex-direction:column;gap:14px}
+.view.on{display:flex}
+h2{font-family:var(--display);font-weight:400;font-size:22px;margin:4px 0 0;color:var(--sea)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.info{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+.info dt{color:var(--muted)}
+.info dd{margin:0;font-weight:500}
+.info a{color:var(--sea);font-weight:600}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1.5px solid var(--line);background:var(--card);color:var(--basalt);border-radius:12px;padding:8px 14px;font:inherit;cursor:pointer;text-align:left;line-height:1.25}
+.chip b{display:block;font-family:var(--display);font-weight:400;font-size:17px}
+.chip small{color:var(--muted);font-size:12px}
+.chip.on{border-color:var(--sea);background:var(--sea);color:#fff}
+.chip.on small{color:#fff;opacity:.85}
+:root[data-theme="dark"] .chip.on,:root[data-theme="dark"] .chip.on small{color:#0d1a1d}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .chip.on,:root:not([data-theme="light"]) .chip.on small{color:#0d1a1d}}
+.chip .today{display:inline-block;margin-left:4px;font-size:11px;background:var(--tangerine);color:#fff;border-radius:6px;padding:0 5px;vertical-align:2px}
+.daytitle{font-size:14px;color:var(--muted);margin:0}
+.timeline{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+.stop{display:grid;grid-template-columns:34px 1fr;gap:12px;position:relative;padding-bottom:12px}
+.stop:not(:last-child)::before{content:"";position:absolute;left:16px;top:34px;bottom:0;width:2px;background:var(--line)}
+.num{width:34px;height:34px;border-radius:50%;background:var(--sea-soft);color:var(--sea);display:grid;place-items:center;font-family:var(--display);font-size:17px;position:relative;z-index:1}
+.stop.meal .num{background:var(--tan-soft);color:var(--tangerine)}
+.stop .body{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.stop .name{font-weight:700;font-size:16px;margin:0;overflow-wrap:anywhere}
+.stop .memo{font-size:13px;color:var(--muted);margin:0}
+.stop .addr{font-size:12.5px;color:var(--muted);margin:0;overflow-wrap:anywhere}
+.tag{display:inline-block;font-size:11.5px;font-weight:700;border-radius:6px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+.tag.must{background:var(--danger);color:#fff}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+.btn{display:inline-flex;align-items:center;gap:5px;font:inherit;font-size:13px;font-weight:600;text-decoration:none;border-radius:9px;padding:6px 11px;border:1px solid var(--line);color:var(--sea);background:var(--bg);cursor:pointer}
+.btn.primary{background:var(--sea);border-color:var(--sea);color:#fff}
+:root[data-theme="dark"] .btn.primary{color:#0d1a1d}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{color:#0d1a1d}}
+.btn:focus-visible,.chip:focus-visible,nav button:focus-visible,.check input:focus-visible{outline:3px solid var(--tangerine);outline-offset:2px}
+.food{display:flex;flex-direction:column;gap:10px}
+.food .row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.food .row .n{font-weight:700}
+.food .row .m{font-size:13px;color:var(--muted)}
+.dtag{flex:0 0 auto;font-size:12px;font-weight:600;color:var(--sea);background:var(--sea-soft);border-radius:8px;padding:3px 8px;white-space:nowrap}
+.filter{display:flex;gap:6px;flex-wrap:wrap}
+.filter button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--card);color:var(--basalt);border-radius:999px;padding:5px 12px;cursor:pointer}
+.filter button.on{background:var(--tangerine);border-color:var(--tangerine);color:#fff}
+.money{display:flex;flex-direction:column;gap:10px}
+.money .item{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.money .label{font-weight:700}
+.money .detail{font-size:12.5px;color:var(--muted);white-space:pre-line}
+.money .amt{font-variant-numeric:tabular-nums;font-weight:700;text-align:right;white-space:nowrap}
+.status{font-size:11px;font-weight:700;border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:1px}
+.status.y{background:var(--ok);color:#fff}
+.status.n{background:var(--line);color:var(--muted)}
+.perperson{background:var(--tan-soft);border:none}
+.perperson .big{font-family:var(--display);font-size:30px;color:var(--tangerine);font-variant-numeric:tabular-nums}
+.check{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.check:last-child{border-bottom:none}
+.check input{width:22px;height:22px;accent-color:var(--sea);flex:0 0 auto}
+.check.done span{text-decoration:line-through;color:var(--muted)}
+.progress{height:8px;border-radius:999px;background:var(--line);overflow:hidden}
+.progress i{display:block;height:100%;background:var(--sea);transition:width .25s}
+.note{font-size:12.5px;color:var(--muted);margin:0}
+.members{display:flex;gap:6px;flex-wrap:wrap}
+.members span{font-size:13px;background:var(--sea-soft);color:var(--sea);border-radius:999px;padding:3px 10px;font-weight:600}
+nav{display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav button{font:inherit;font-size:12px;background:none;border:none;color:var(--muted);padding:9px 0 8px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+nav button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--sea);font-weight:700}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="orange" aria-hidden="true"></div>
+    <h1 class="brand">아름Pick <span>제주</span></h1>
+    <div class="meta">
+      <div>2027.1.16(토) – 1.19(화) · 3박 4일</div>
+      <div class="dday" id="dday">D-</div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 일정 -->
+    <section class="view on" id="v-plan" aria-label="일정">
+      <div class="card">
+        <dl class="info">
+          <dt>도착</dt><dd>1/16(토) 13:00쯤 제주공항</dd>
+          <dt>출발</dt><dd>1/19(화) 시간 미정</dd>
+          <dt>렌터카</dt><dd>싼타페 (SUV)</dd>
+          <dt>숙소</dt><dd><a href="https://naver.me/5PVaUcWE" target="_blank" rel="noopener">제주 디아일랜드 블루</a> · 3박</dd>
+          <dt>멤버</dt><dd><div class="members"><span>김아름</span><span>정호연</span><span>황차식</span><span>차식이의 그녀</span></div></dd>
+        </dl>
+      </div>
+      <div class="chips" id="dayChips" role="tablist" aria-label="날짜 선택"></div>
+      <p class="daytitle" id="dayTitle"></p>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <!-- 맛집 -->
+    <section class="view" id="v-food" aria-label="맛집">
+      <h2>맛집 리스트</h2>
+      <div class="filter" id="foodFilter"></div>
+      <div class="card food" id="foodList"></div>
+    </section>
+
+    <!-- 경비 -->
+    <section class="view" id="v-money" aria-label="경비">
+      <h2>경비 (대략)</h2>
+      <div class="card perperson">
+        <div class="note">1인당 예상</div>
+        <div class="big">335,000원</div>
+        <p class="note">노션 경비표 기준 · 식비 미포함</p>
+      </div>
+      <div class="card money" id="moneyList"></div>
+    </section>
+
+    <!-- 준비물 -->
+    <section class="view" id="v-pack" aria-label="준비물">
+      <h2>준비물</h2>
+      <div class="progress" aria-hidden="true"><i id="packBar" style="width:0%"></i></div>
+      <p class="note" id="packCount"></p>
+      <div class="card" id="packList"></div>
+      <p class="note">체크한 내용은 이 폰에만 저장돼요.</p>
+    </section>
+  </main>
+
+  <nav aria-label="메뉴">
+    <button class="on" data-view="v-plan"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>일정</button>
+    <button data-view="v-food"><svg viewBox="0 0 24 24"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 0-3 2-3 5s1 4 3 4v9"/></svg>맛집</button>
+    <button data-view="v-money"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/></svg>경비</button>
+    <button data-view="v-pack"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>준비물</button>
+  </nav>
+</div>
+
+<script>
+const DAYS = [
+  { date:"2027-01-16", label:"Day 1", sub:"1/16 토", title:"도착 & 서귀포", stops:[
+    {n:"제주 도착 → 렌터카 픽업", m:"13:00쯤"},
+    {n:"골막식당", m:"점심 (고기국수)", meal:1, link:"https://naver.me/G7Vq75nu", a:"제주 제주시 천수로 12"},
+    {n:"샤이니 숲길", m:"산책", link:"https://naver.me/FXnp10Ej", a:"제주 제주시 조천읍 교래리 719-10"},
+    {n:"숙소 체크인", m:"제주 디아일랜드 블루", link:"https://naver.me/5PVaUcWE", a:"제주특별자치도 서귀포시 태평로431번길 3"},
+    {n:"먹고정 서귀포올레시장 본점", m:"저녁 1차", meal:1, link:"https://naver.me/5mI0FcUS", a:"제주 서귀포시 명동로 5-1"},
+    {n:"올레시장 안주 구매 → 숙소 2차", m:"싱싱올레해산물 등", meal:1, link:"https://naver.me/xI1o039H", a:"제주 서귀포시 중앙로48번길 14 서귀포매일올레시장"}
+  ]},
+  { date:"2027-01-17", label:"Day 2", sub:"1/17 일", title:"감귤 & 동백", stops:[
+    {n:"해장살롱", m:"아침 (해장국)", meal:1, link:"https://naver.me/G1ppzqNE", a:"제주특별자치도 서귀포시 중문관광로 90 B동 1층"},
+    {n:"구들민박 감귤체험 농장", m:"감귤 따기", link:"https://naver.me/FfeY3tHz", a:"제주 서귀포시 정방연로 34"},
+    {n:"제주귤집", m:"카페", meal:1, link:"https://naver.me/GB35WTAl", a:"제주 서귀포시 동홍중앙로66번길 22-10"},
+    {n:"색달식당", m:"점심 (갈치조림)", meal:1, link:"https://naver.me/FRLNpN7u", a:"제주특별자치도 서귀포시 예래로 255-18 1층"},
+    {n:"제주동백수목원", m:"동백꽃", link:"https://naver.me/5BcjEuSd", a:"제주 서귀포시 남원읍 위미리 929-2"},
+    {n:"제주서문수산", m:"저녁 (회 오마카세)", must:1, meal:1, link:"https://naver.me/GgWQPoEh", a:"제주 제주시 서문로4길 13-2 103호"},
+    {n:"올레시장 안주 구매 → 숙소 2차", m:"", meal:1, a:"제주 서귀포시 중앙로48번길 14 서귀포매일올레시장"}
+  ]},
+  { date:"2027-01-18", label:"Day 3", sub:"1/18 월", title:"목장 & 중문", stops:[
+    {n:"숙소에서 아침", m:"라면 & 김밥", meal:1},
+    {n:"성이시돌목장", m:"눈 구경", link:"https://naver.me/x9BeGfxK", a:"제주 제주시 산록남로 53"},
+    {n:"우유부단", m:"카페", meal:1, link:"https://naver.me/GCvpwgFd", a:"제주 제주시 한림읍 금악리 142-2"},
+    {n:"이춘옥원조고등어쌈밥", m:"점심", meal:1, link:"https://naver.me/5yPnRiiE", a:"제주 제주시 애월읍 일주서로 7213"},
+    {n:"중문색달해수욕장", m:"한담해안산책로~", q:"중문색달해수욕장"},
+    {n:"문비치", m:"저녁 (흑돼지)", meal:1, link:"https://naver.me/FjbZUwlw", a:"제주 서귀포시 신서로32번길 14"},
+    {n:"올레시장 안주 구매 → 숙소 2차", m:"", meal:1, a:"제주 서귀포시 중앙로48번길 14 서귀포매일올레시장"}
+  ]},
+  { date:"2027-01-19", label:"Day 4", sub:"1/19 화", title:"귀가", stops:[
+    {n:"기상 → 간단히 아침 → 체크아웃", m:""},
+    {n:"동문시장", m:"구경·기념품 쇼핑", q:"제주 동문시장"},
+    {n:"서문시장", m:"공항 쪽이라 마지막에", q:"제주 서문공설시장"},
+    {n:"렌터카 반납", m:""},
+    {n:"공항 → 비행기", m:"출발 1시간 반 전 도착", q:"제주국제공항"}
+  ]}
+];
+
+const MONEY = [
+  {k:"항공", d:"가는편 223,500원 (3인)\n오는편 165,000원 (3인)\n1인당 왕복", t:"388,500", ok:1},
+  {k:"숙소", d:"171,600 × 2개 · 3박 기준", t:"343,200", ok:1},
+  {k:"렌터카", d:"3일 기준 · SUV 싼타페", t:"150,000", ok:0},
+  {k:"식비", d:"미정", t:"–", ok:0},
+  {k:"황차식 선금", d:"50", t:"", ok:0}
+];
+
+const PACK = ["신분증","두꺼운 외투, 장갑, 목도리 (바람 대비)","운전면허증 (렌터카)","충전기, 보조배터리","상비약 (웬만한 건 아름이가 다 챙김)"];
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const mapUrl = s => "https://map.naver.com/p/search/" + encodeURIComponent(s);
+
+function store(k, v){ try{ if(v===undefined) return JSON.parse(localStorage.getItem(k)); localStorage.setItem(k, JSON.stringify(v)); }catch(e){ return null; } }
+
+function todayStr(){
+  const d = new Date(Date.now() + 9*3600*1000); // KST
+  return d.toISOString().slice(0,10);
+}
+
+// D-day
+(function(){
+  const t = todayStr();
+  const start = new Date("2027-01-16T00:00:00Z"), now = new Date(t+"T00:00:00Z");
+  const diff = Math.round((start - now)/86400000);
+  const el = $("#dday");
+  if (diff > 0) el.textContent = "D-" + diff;
+  else if (t <= "2027-01-19") el.textContent = "여행 " + (1 - diff) + "일차";
+  else el.textContent = "다녀왔어요";
+})();
+
+// 일정
+let curDay = 0;
+const tIdx = DAYS.findIndex(d => d.date === todayStr());
+const saved = store("jeju-day");
+curDay = tIdx >= 0 ? tIdx : (Number.isInteger(saved) ? saved : 0);
+
+function renderChips(){
+  $("#dayChips").innerHTML = DAYS.map((d,i) =>
+    `<button class="chip${i===curDay?" on":""}" role="tab" aria-selected="${i===curDay}" data-i="${i}">
+      <b>${d.label}${i===tIdx?'<span class="today">오늘</span>':""}</b><small>${d.sub}</small></button>`).join("");
+}
+function renderDay(){
+  const d = DAYS[curDay];
+  $("#dayTitle").textContent = d.sub + " · " + d.title;
+  $("#timeline").innerHTML = d.stops.map((s,i) => {
+    const q = s.a || s.q;
+    return `<li class="stop${s.meal?" meal":""}">
+      <div class="num">${i+1}</div>
+      <div class="body">
+        <p class="name">${esc(s.n)}${s.must?'<span class="tag must">예약 필수</span>':""}</p>
+        ${s.m?`<p class="memo">${esc(s.m)}</p>`:""}
+        ${s.a?`<p class="addr">${esc(s.a)}</p>`:""}
+        ${(s.link||q)?`<div class="btns">
+          ${q?`<a class="btn primary" href="${mapUrl(q)}" target="_blank" rel="noopener">길찾기</a>`:""}
+          ${s.link?`<a class="btn" href="${s.link}" target="_blank" rel="noopener">상세 정보</a>`:""}
+          ${s.a?`<button class="btn" data-copy="${esc(s.a)}">주소 복사</button>`:""}
+        </div>`:""}
+      </div></li>`;
+  }).join("");
+}
+$("#dayChips").addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if(!b) return;
+  curDay = +b.dataset.i; store("jeju-day", curDay); renderChips(); renderDay();
+});
+$("#timeline").addEventListener("click", async e => {
+  const b = e.target.closest("[data-copy]"); if(!b) return;
+  try{ await navigator.clipboard.writeText(b.dataset.copy); b.textContent = "복사됨 ✓"; }
+  catch(err){ b.textContent = "길게 눌러 복사"; }
+  setTimeout(() => b.textContent = "주소 복사", 1500);
+});
+renderChips(); renderDay();
+
+// 맛집
+const FOOD = [];
+DAYS.forEach((d,i) => d.stops.forEach(s => { if(s.meal && s.link) FOOD.push({...s, day:i}); }));
+let foodDay = -1;
+function renderFood(){
+  $("#foodFilter").innerHTML = [`<button data-d="-1" class="${foodDay===-1?"on":""}">전체</button>`]
+    .concat(DAYS.map((d,i) => `<button data-d="${i}" class="${foodDay===i?"on":""}">${d.label}</button>`)).join("");
+  const list = FOOD.filter(f => foodDay===-1 || f.day===foodDay);
+  $("#foodList").innerHTML = list.length ? list.map(f => `
+    <div class="row">
+      <div><div class="n">${esc(f.n.replace(" → 숙소 2차",""))}${f.must?'<span class="tag must">예약 필수</span>':""}</div>
+      <div class="m">${esc(f.m)}</div>
+      <div class="btns"><a class="btn" href="${f.link}" target="_blank" rel="noopener">상세 정보</a><a class="btn" href="${mapUrl(f.a||f.n)}" target="_blank" rel="noopener">지도</a></div></div>
+      <span class="dtag">${DAYS[f.day].label}</span>
+    </div>`).join('<hr style="border:none;border-top:1px solid var(--line);margin:0">') : '<p class="note">이 날은 등록된 맛집이 없어요.</p>';
+}
+$("#foodFilter").addEventListener("click", e => { const b=e.target.closest("button"); if(!b) return; foodDay=+b.dataset.d; renderFood(); });
+renderFood();
+
+// 경비
+$("#moneyList").innerHTML = MONEY.map(m => `
+  <div class="item">
+    <div><div class="label">${esc(m.k)}<span class="status ${m.ok?"y":"n"}">${m.ok?"확정":"미정"}</span></div>
+    <div class="detail">${esc(m.d)}</div></div>
+    <div class="amt">${m.t && m.t!=="–" ? esc(m.t)+"원" : esc(m.t)}</div>
+  </div>`).join('<hr style="border:none;border-top:1px solid var(--line);margin:0">');
+
+// 준비물
+let packed = store("jeju-pack") || [];
+function renderPack(){
+  $("#packList").innerHTML = PACK.map((p,i) => `
+    <label class="check${packed.includes(i)?" done":""}" for="pk${i}">
+      <input type="checkbox" id="pk${i}" data-i="${i}" ${packed.includes(i)?"checked":""}><span>${esc(p)}</span></label>`).join("");
+  const n = packed.length;
+  $("#packBar").style.width = (n/PACK.length*100) + "%";
+  $("#packCount").textContent = `${PACK.length}개 중 ${n}개 챙김`;
+}
+$("#packList").addEventListener("change", e => {
+  const i = +e.target.dataset.i;
+  packed = e.target.checked ? [...new Set([...packed,i])] : packed.filter(x => x!==i);
+  store("jeju-pack", packed); renderPack();
+});
+renderPack();
+
+// 탭
+function show(id){
+  document.querySelectorAll(".view").forEach(v => v.classList.toggle("on", v.id===id));
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.view===id));
+  $("main").scrollTop = 0;
+  const h = {"v-plan":"","v-food":"food","v-money":"money","v-pack":"pack"}[id];
+  if (location.hash.slice(1) !== h) history.replaceState(null, "", h ? "#"+h : location.pathname);
+}
+document.querySelector("nav").addEventListener("click", e => { const b=e.target.closest("button"); if(b) show(b.dataset.view); });
+const fromHash = () => ({food:"v-food",money:"v-money",pack:"v-pack"})[location.hash.slice(1)] || "v-plan";
+window.addEventListener("hashchange", () => show(fromHash()));
+show(fromHash());
+</script>
+</body>
+</html>
