@@ -8,7 +8,7 @@
 <title>아름Pick 제주 여행</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
 <style>
 /* layout: 폰 화면 하나짜리 앱 — 상단 헤더(D-day) + 스크롤 본문 + 하단 탭바 */
 :root{
@@ -23,8 +23,8 @@
   --tan-soft:#fdeedf;
   --ok:#2e8b57;
   --danger:#d6453d;
-  --display:"Jua", "Gowun Dodum", sans-serif;
-  --body:"Gowun Dodum", -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --display:"Cute Font", "Gaegu", cursive;
+  --body:"Gaegu", -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark){
@@ -43,22 +43,22 @@
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
-body{background:var(--bg);color:var(--basalt);font-family:var(--body);font-size:15px;line-height:1.5;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--basalt);font-family:var(--body);font-size:18px;line-height:1.4;-webkit-tap-highlight-color:transparent}
 .app{max-width:520px;margin:0 auto;height:100%;display:flex;flex-direction:column}
 header{background:var(--sea);color:#fff;padding:calc(env(safe-area-inset-top) + 18px) 20px 18px;position:relative;overflow:hidden}
 :root[data-theme="dark"] header{color:#0d1a1d}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) header{color:#0d1a1d}}
-header .brand{font-family:var(--display);font-size:28px;line-height:1.1;margin:0;text-wrap:balance}
+header .brand{font-family:var(--display);font-size:40px;line-height:1.1;margin:0;text-wrap:balance}
 header .brand span{color:var(--tangerine)}
 :root[data-theme="dark"] header .brand span{color:#7a3500}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) header .brand span{color:#7a3500}}
 header .meta{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:6px;font-size:13px;opacity:.9}
-.dday{font-family:var(--display);font-size:22px;background:var(--tangerine);color:#fff;padding:4px 12px;border-radius:999px;white-space:nowrap}
+.dday{font-family:var(--display);font-size:28px;background:var(--tangerine);color:#fff;padding:4px 12px;border-radius:999px;white-space:nowrap}
 .orange{position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:var(--tangerine);opacity:.18}
 main{flex:1;overflow-y:auto;padding:16px 16px 24px}
 .view{display:none;flex-direction:column;gap:14px}
 .view.on{display:flex}
-h2{font-family:var(--display);font-weight:400;font-size:22px;margin:4px 0 0;color:var(--sea)}
+h2{font-family:var(--display);font-weight:400;font-size:30px;margin:4px 0 0;color:var(--sea)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
 .info{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
 .info dt{color:var(--muted)}
@@ -67,7 +67,7 @@ h2{font-family:var(--display);font-weight:400;font-size:22px;margin:4px 0 0;colo
 .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
 .chip{flex:0 0 auto;border:1.5px solid var(--line);background:var(--card);color:var(--basalt);border-radius:12px;padding:8px 14px;font:inherit;cursor:pointer;text-align:left;line-height:1.25}
-.chip b{display:block;font-family:var(--display);font-weight:400;font-size:17px}
+.chip b{display:block;font-family:var(--display);font-weight:400;font-size:24px}
 .chip small{color:var(--muted);font-size:12px}
 .chip.on{border-color:var(--sea);background:var(--sea);color:#fff}
 .chip.on small{color:#fff;opacity:.85}
@@ -78,7 +78,7 @@ h2{font-family:var(--display);font-weight:400;font-size:22px;margin:4px 0 0;colo
 .timeline{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
 .stop{display:grid;grid-template-columns:34px 1fr;gap:12px;position:relative;padding-bottom:12px}
 .stop:not(:last-child)::before{content:"";position:absolute;left:16px;top:34px;bottom:0;width:2px;background:var(--line)}
-.num{width:34px;height:34px;border-radius:50%;background:var(--sea-soft);color:var(--sea);display:grid;place-items:center;font-family:var(--display);font-size:17px;position:relative;z-index:1}
+.num{width:34px;height:34px;border-radius:50%;background:var(--sea-soft);color:var(--sea);display:grid;place-items:center;font-family:var(--display);font-size:24px;position:relative;z-index:1}
 .stop.meal .num{background:var(--tan-soft);color:var(--tangerine)}
 .stop .body{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
 .stop .name{font-weight:700;font-size:16px;margin:0;overflow-wrap:anywhere}
@@ -109,7 +109,7 @@ h2{font-family:var(--display);font-weight:400;font-size:22px;margin:4px 0 0;colo
 .status.y{background:var(--ok);color:#fff}
 .status.n{background:var(--line);color:var(--muted)}
 .perperson{background:var(--tan-soft);border:none}
-.perperson .big{font-family:var(--display);font-size:30px;color:var(--tangerine);font-variant-numeric:tabular-nums}
+.perperson .big{font-family:var(--display);font-size:40px;color:var(--tangerine);font-variant-numeric:tabular-nums}
 .check{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer}
 .check:last-child{border-bottom:none}
 .check input{width:22px;height:22px;accent-color:var(--sea);flex:0 0 auto}
@@ -123,7 +123,7 @@ h2{font-family:var(--display);font-weight:400;font-size:22px;margin:4px 0 0;colo
 .sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:flex-end;justify-content:center;z-index:10}
 .sheet-bg.on{display:flex}
 .sheet{background:var(--card);width:100%;max-width:520px;border-radius:18px 18px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px}
-.sheet h3{font-family:var(--display);font-weight:400;font-size:22px;margin:0;color:var(--sea)}
+.sheet h3{font-family:var(--display);font-weight:400;font-size:30px;margin:0;color:var(--sea)}
 .sheet .tel{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
 .sheet .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .sheet .btn{justify-content:center;padding:12px;font-size:15px}
